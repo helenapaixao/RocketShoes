@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import {darked, darken} from 'polished'
+import { darken} from 'polished'
 
 export const ProductList = styled.ul`
   display: grid;
