@@ -4,6 +4,7 @@ import { MdRemoveCircleOutline, MdAddCircleOutline, MdDelete } from "react-icons
 import { Container, ProductTable, Total } from "./styles";
 import * as CartActions from '../../store/modules/cart/actions'
 import { bindActionCreators } from "redux";
+import {formatPrice} from '../../util/format'
 
 function Cart({ cart,removeFromCart,updateAmount}) {
   function increment(product) {
@@ -48,7 +49,7 @@ function Cart({ cart,removeFromCart,updateAmount}) {
                 </div>
               </td>
               <td>
-                <strong>R$ 258,80</strong>
+                <strong>{product.subtotal}</strong>
               </td>
               <td>
                 <button type="button" onClick={() => removeFromCart(product.id)}>
@@ -70,7 +71,10 @@ function Cart({ cart,removeFromCart,updateAmount}) {
   );
 }
 const mapStateToProps = state => ({
-  cart: state.cart
+  cart: state.cart.map(product => ({
+    ...product,
+    subtotal: formatPrice(product.price * product.amount ),
+  }))
 });
 
 const mapDispatchToProps = dispatch =>
