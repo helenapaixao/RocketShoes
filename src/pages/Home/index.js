@@ -15,13 +15,22 @@ class Home extends Component {
 
   async componentDidMount() {
     const response = await api.get("products");
+
     const data = response.data.map(product => ({
       ...product,
       priceFormatted: formatPrice(product.price),
     }));
 
     this.setState({ products: response.data });
+    setTimeout(() => {
+      this.setState({ products: data, loading: false });
+
+      setTimeout(() => {
+        this.setState({ didMount: true });
+      }, 0);
+    }, 1000);
   }
+
 
   handleAddProduct = id => {
     const {addToCartRequest} = this.props;
@@ -29,6 +38,7 @@ class Home extends Component {
     addToCartRequest(id);
 
   }
+
   render() {
     const { products } = this.state;
     const {amount} = this.props;
